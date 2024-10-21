@@ -1,7 +1,9 @@
-abstract class RegisterController {
+abstract class LoginController {
   void hideLoading();
 
-  void showLoading(String message,);
+  void showLoading(
+    String message,
+  );
 
   void showMessage(String message, String title,
       {String posActionName, Function posAction});

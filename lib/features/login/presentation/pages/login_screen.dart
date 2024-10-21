@@ -1,4 +1,3 @@
-import 'package:chat_app/config/routes.dart';
 import 'package:chat_app/core/reusable_components/app_validators.dart';
 import 'package:chat_app/core/reusable_components/base_screen_layout.dart';
 import 'package:chat_app/core/reusable_components/custom_text_form_field.dart';
@@ -8,23 +7,24 @@ import 'package:chat_app/core/utils/font_constants.dart';
 import 'package:chat_app/core/utils/strings.dart';
 import 'package:chat_app/core/utils/text_style_manager.dart';
 import 'package:chat_app/features/register/presentation/manager/providers/register_controller.dart';
-import 'package:chat_app/features/register/presentation/manager/providers/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/routes.dart';
 import '../../../../core/reusable_components/custom_elevated_button.dart';
+import '../manager/providers/login_view_model.dart';
 
-class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen>
+class _RegisterScreenState extends State<LoginScreen>
     implements RegisterController {
-  RegisterViewModel viewModel = RegisterViewModel();
+  LoginViewModel viewModel = LoginViewModel();
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen>
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              AppStrings.registerTitle,
+              AppStrings.loginTitle,
               style: getTextStyle(
                   fontSize: FontSize.s20,
                   fontWeight: FontWeightManager.bold,
@@ -58,10 +58,13 @@ class _RegisterScreenState extends State<RegisterScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CustomTextFormField(
-                    label: AppStrings.fullName,
-                    validator: (val) => AppValidators.validateFullName(val),
-                    controller: viewModel.fullNameController,
+                  Text(
+                    AppStrings.welcomeBack,
+                    style: getTextStyle(
+                        fontSize: FontSize.s20,
+                        fontWeight: FontWeightManager.bold,
+                        fontFamily: FontConstants.poppins,
+                        color: ColorManager.black),
                   ),
                   CustomTextFormField(
                     label: AppStrings.email,
@@ -73,12 +76,6 @@ class _RegisterScreenState extends State<RegisterScreen>
                     label: AppStrings.password,
                     validator: (val) => AppValidators.validatePassword(val),
                     controller: viewModel.passController,
-                  ),
-                  CustomTextFormField(
-                    label: AppStrings.confirmPassword,
-                    validator: (val) => AppValidators.validateConfirmPassword(
-                        val, viewModel.passController),
-                    controller: viewModel.confirmPassController,
                   ),
                   SizedBox(
                     height: 20.h,
@@ -92,19 +89,20 @@ class _RegisterScreenState extends State<RegisterScreen>
                         shape: WidgetStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onClicked: () {
-                      viewModel.createUser(
+                      viewModel.signIn(
                           emailAddress: viewModel.emailController.text,
                           password: viewModel.passController.text);
                     },
-                    child: Text(
-                        AppStrings.registerButton), // Add a register button
+                    child:
+                        Text(AppStrings.loginButton), // Add a register button
                   ),
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, Routes.loginScreenRoute);
+                        Navigator.pushNamed(
+                            context, Routes.registerScreenRoute);
                       },
                       child: Text(
-                        AppStrings.alreadyHaveAnAcc,
+                        AppStrings.doNotHaveAnAcc,
                         style: getTextStyle(
                             fontSize: FontSize.s12,
                             fontWeight: FontWeightManager.regular,
@@ -134,12 +132,11 @@ class _RegisterScreenState extends State<RegisterScreen>
   void showMessage(String message, String title,
       {String? posActionName, Function? posAction}) {
     DialogUtils.showMessage(
-        context: context,
-        message: message,
-        title: title,
-        posActionName: posActionName,
-        posAction: posActionName == AppStrings.Continue
-            ? () => Navigator.pushNamed(context, Routes.loginScreenRoute)
-            : () => Navigator.pop(context));
+      context: context,
+      message: message,
+      title: title,
+      posActionName: posActionName,
+      //TODO: handle navigation to home screen
+    );
   }
 }

@@ -1,8 +1,11 @@
-import 'package:chat_app/features/register/presentation/pages/register_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../features/login/presentation/pages/login_screen.dart';
+import '../features/register/presentation/pages/register_screen.dart';
 
 class Routes {
   static const String registerScreenRoute = "/register screen";
+  static const String loginScreenRoute = "/login screen";
 }
 
 class RouteGenerator {
@@ -10,6 +13,8 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.registerScreenRoute:
         return MaterialPageRoute(builder: (_) => RegisterScreen());
+      case Routes.loginScreenRoute:
+        return MaterialPageRoute(builder: (_) => LoginScreen());
       default:
         return unDefinedRouteName();
     }
