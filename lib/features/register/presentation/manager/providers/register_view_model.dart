@@ -24,19 +24,22 @@ class RegisterViewModel extends ChangeNotifier {
         );
         controller.hideLoading();
         controller.showMessage(
-            AppStrings.registerSuccessful, AppStrings.success);
+            AppStrings.registerSuccessful, AppStrings.success,
+            posActionName: AppStrings.Continue);
       } on FirebaseAuthException catch (e) {
         if (e.code == AppStrings.weakPassword) {
           controller.hideLoading();
-          controller.showMessage(AppStrings.weakPassMsg, AppStrings.failed);
+          controller.showMessage(AppStrings.weakPassMsg, AppStrings.failed,
+              posActionName: AppStrings.close);
         } else if (e.code == AppStrings.existingEmail) {
           controller.hideLoading();
-          controller.showMessage(
-              AppStrings.existingEmailMsg, AppStrings.failed);
+          controller.showMessage(AppStrings.existingEmailMsg, AppStrings.failed,
+              posActionName: AppStrings.close);
         }
       } catch (e) {
         controller.hideLoading();
-        controller.showMessage(e.toString(), AppStrings.failed);
+        controller.showMessage(e.toString(), AppStrings.failed,
+            posActionName: AppStrings.close);
       }
     }
   }
