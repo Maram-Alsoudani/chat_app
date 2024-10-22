@@ -7,13 +7,13 @@ import 'package:chat_app/core/utils/colors.dart';
 import 'package:chat_app/core/utils/font_constants.dart';
 import 'package:chat_app/core/utils/strings.dart';
 import 'package:chat_app/core/utils/text_style_manager.dart';
-import 'package:chat_app/features/register/presentation/manager/providers/register_controller.dart';
-import 'package:chat_app/features/register/presentation/manager/providers/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/reusable_components/custom_elevated_button.dart';
+import '../../../core/reusable_components/custom_elevated_button.dart';
+import '../manager/providers/register_view_model.dart';
+import '../manager/view_viewModel_controller/register_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});

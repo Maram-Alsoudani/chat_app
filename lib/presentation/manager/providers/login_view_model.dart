@@ -1,8 +1,8 @@
-import 'package:chat_app/features/register/presentation/manager/providers/register_controller.dart';
+import 'package:chat_app/presentation/manager/view_viewModel_controller/register_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../core/utils/strings.dart';
+import '../../../../core/utils/strings.dart';
 
 class LoginViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();

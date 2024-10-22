@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../features/login/presentation/pages/login_screen.dart';
-import '../features/register/presentation/pages/register_screen.dart';
+import '../presentation/pages/login_screen.dart';
+import '../presentation/pages/register_screen.dart';
 
 class Routes {
   static const String registerScreenRoute = "/register screen";
