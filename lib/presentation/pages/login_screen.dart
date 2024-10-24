@@ -6,6 +6,7 @@ import 'package:chat_app/core/utils/colors.dart';
 import 'package:chat_app/core/utils/font_constants.dart';
 import 'package:chat_app/core/utils/strings.dart';
 import 'package:chat_app/core/utils/text_style_manager.dart';
+import 'package:chat_app/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class LoginScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<LoginScreen>
     implements RegisterController {
-  LoginViewModel viewModel = LoginViewModel();
+  LoginViewModel viewModel = getIt<LoginViewModel>();
 
   @override
   void initState() {

@@ -21,4 +21,10 @@ class FirebaseRemoteDataSourceImpl extends FirebaseRemoteDataSource {
     DocumentReference<UserModel> doc = userRef.doc(userModel.id);
     return doc.set(userModel);
   }
+
+  @override
+  Future<UserModel?> getUserFromFireStore(String userId) async {
+    var documentSnapshot = await getUsersCollection().doc(userId).get();
+    return documentSnapshot.data();
+  }
 }

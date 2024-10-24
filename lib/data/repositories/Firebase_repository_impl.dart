@@ -20,4 +20,9 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     );
     return firebaseRemoteDataSource.addUserToFireStore(userModel);
   }
+
+  @override
+  Future<UserEntity?> getUserFromFireStore(String userId) {
+    return firebaseRemoteDataSource.getUserFromFireStore(userId);
+  }
 }
