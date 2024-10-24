@@ -1,6 +1,5 @@
 import 'package:chat_app/config/routes.dart';
 import 'package:chat_app/config/theming.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String route = Routes.registerScreenRoute;
+    String route = Routes.loginScreenRoute;
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
