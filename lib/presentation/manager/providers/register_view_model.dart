@@ -1,9 +1,13 @@
+import 'package:chat_app/domain/entities/user_entity.dart';
+import 'package:chat_app/domain/use_cases/add_user_use_case.dart';
 import 'package:chat_app/presentation/manager/view_viewModel_controller/register_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/strings.dart';
 
+@injectable
 class RegisterViewModel extends ChangeNotifier {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -11,6 +15,9 @@ class RegisterViewModel extends ChangeNotifier {
   TextEditingController confirmPassController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   late RegisterController controller;
+  AddUserUseCase addUserUseCase;
+
+  RegisterViewModel({required this.addUserUseCase});
 
   void createUser(
       {required String emailAddress, required String password}) async {
@@ -22,6 +29,13 @@ class RegisterViewModel extends ChangeNotifier {
           email: emailAddress,
           password: password,
         );
+        //Save user
+        UserEntity user = UserEntity(
+            id: credential.user?.uid ?? "",
+            email: emailAddress,
+            fullName: fullNameController.text);
+        var savedUserData = await addUserUseCase.call(user);
+        //hide loading - show message
         controller.hideLoading();
         controller.showMessage(
             AppStrings.registerSuccessful, AppStrings.success,
