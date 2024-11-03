@@ -137,7 +137,8 @@ class _RegisterScreenState extends State<LoginScreen>
       message: message,
       title: title,
       posActionName: posActionName,
-      //TODO: handle navigation to home screen
-    );
+        posAction: () {
+          Navigator.pushNamed(context, Routes.homeScreenRoute);
+        });
   }
 }
