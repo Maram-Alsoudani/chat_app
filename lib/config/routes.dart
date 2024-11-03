@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../presentation/pages/home_screen.dart';
 import '../presentation/pages/login_screen.dart';
 import '../presentation/pages/register_screen.dart';
 
 class Routes {
   static const String registerScreenRoute = "/register screen";
   static const String loginScreenRoute = "/login screen";
+  static const String homeScreenRoute = "/home screen";
 }
 
 class RouteGenerator {
@@ -15,6 +17,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case Routes.loginScreenRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case Routes.homeScreenRoute:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
       default:
         return unDefinedRouteName();
     }

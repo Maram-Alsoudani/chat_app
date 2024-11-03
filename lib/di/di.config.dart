@@ -16,6 +16,8 @@ import '../data/data_sources/firebase_remote_data_source_impl.dart' as _i425;
 import '../data/repositories/Firebase_repository_impl.dart' as _i987;
 import '../domain/repositories/firebase_repository.dart' as _i974;
 import '../domain/use_cases/add_user_use_case.dart' as _i62;
+import '../domain/use_cases/get_user_use_case.dart' as _i997;
+import '../presentation/manager/providers/login_view_model.dart' as _i632;
 import '../presentation/manager/providers/register_view_model.dart' as _i933;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -35,8 +37,12 @@ extension GetItInjectableX on _i174.GetIt {
         firebaseRemoteDataSource: gh<_i1005.FirebaseRemoteDataSource>()));
     gh.factory<_i62.AddUserUseCase>(() => _i62.AddUserUseCase(
         firebaseRepository: gh<_i974.FirebaseRepository>()));
+    gh.factory<_i997.GetUserUseCase>(() => _i997.GetUserUseCase(
+        firebaseRepository: gh<_i974.FirebaseRepository>()));
     gh.factory<_i933.RegisterViewModel>(() =>
         _i933.RegisterViewModel(addUserUseCase: gh<_i62.AddUserUseCase>()));
+    gh.factory<_i632.LoginViewModel>(
+        () => _i632.LoginViewModel(getUserUseCase: gh<_i997.GetUserUseCase>()));
     return this;
   }
 }
