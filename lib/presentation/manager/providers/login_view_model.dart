@@ -1,5 +1,5 @@
 import 'package:chat_app/domain/use_cases/get_user_use_case.dart';
-import 'package:chat_app/presentation/manager/view_viewModel_controller/register_controller.dart';
+import 'package:chat_app/presentation/manager/view_viewModel_controller/login_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
@@ -11,7 +11,7 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  late RegisterController controller;
+  late LoginController controller;
   GetUserUseCase getUserUseCase;
 
   LoginViewModel({required this.getUserUseCase});
@@ -19,7 +19,7 @@ class LoginViewModel extends ChangeNotifier {
   void signIn({required String emailAddress, required String password}) async {
     if (formKey.currentState?.validate() == true) {
       //show loading
-      controller.showLoading(AppStrings.loading);
+      controller.showLoading();
       try {
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
@@ -28,22 +28,22 @@ class LoginViewModel extends ChangeNotifier {
         var userObj = await getUserUseCase.call(credential.user?.uid ?? "");
         if (userObj != null) {
           controller.hideLoading();
-          controller.showMessage(AppStrings.loginSuccessful, AppStrings.success,
-              posActionName: AppStrings.Continue);
+          controller.showMessage(AppStrings.success);
         } else {
           controller.hideLoading();
-          controller.showMessage(AppStrings.userNotFoundMsg, AppStrings.failed,
-              posActionName: AppStrings.close);
+          controller.showMessage(AppStrings.failed,
+              error: AppStrings.userNotFoundMsg);
         }
         //hide loading - show message
       } on FirebaseAuthException catch (e) {
         controller.hideLoading();
-        controller.showMessage(AppStrings.invalidCredentials, AppStrings.failed,
-            posActionName: AppStrings.close);
+        if (e.code == AppStrings.invalidCredentials) {
+          controller.showMessage(AppStrings.failed,
+              error: AppStrings.wrongPasswordMsg);
+        }
       } catch (e) {
         controller.hideLoading();
-        controller.showMessage(e.toString(), AppStrings.failed,
-            posActionName: AppStrings.close);
+        controller.showMessage(AppStrings.failed, error: e.toString());
       }
     }
   }

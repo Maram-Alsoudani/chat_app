@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?) validator;
   final TextInputType keyboardType;
   final bool? isSecured;
+  final int? maxLines;
 
   CustomTextFormField({
     required this.label,
@@ -17,7 +18,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.isSecured = false,
-  });
+      this.maxLines = 1});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -44,6 +45,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             fontFamily: FontConstants.poppins),
         controller: widget.controller,
         keyboardType: widget.keyboardType,
+        maxLines: widget.maxLines,
         validator: widget.validator,
         obscureText: _isSecured,
         cursorColor: ColorManager.grey,

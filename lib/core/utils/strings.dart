@@ -3,6 +3,7 @@ class AppStrings {
   static const String registerTitle = "Create Account";
   static const String loginTitle = "Login";
   static const String welcomeBack = "Welcome Back!";
+  static const String home = "Home";
 
   // Button texts
   static const String registerButton = "Create Account";
@@ -20,8 +21,7 @@ class AppStrings {
   // Firebase Exceptions Strings
   static const String weakPassword = 'weak-password';
   static const String existingEmail = 'email-already-in-use';
-  static const String invalidCredentials =
-      'Incorrect Email or Password. Please try again.';
+  static const String invalidCredentials = 'invalid-credential';
 
   // Firebase Exceptions messages
   static const String weakPassMsg = 'The password provided is too weak.';
@@ -29,16 +29,16 @@ class AppStrings {
       'The account already exists for that email.';
   static const String userNotFoundMsg = 'No user found for that email.';
   static const String wrongPasswordMsg =
-      'Wrong password provided for that user.';
+      'Wrong email or password provided for that user.';
 
-  //Auth Dialog messages
+  //Dialog messages
   static const String loading = "Loading";
   static const String failed = "Failed";
   static const String success = "Success!";
   static const String loginSuccessful = "You have successfully logged in.";
   static const String registerSuccessful =
       "Your account has been successfully created.";
-
   static const String close = "Close";
   static const String Continue = "Continue";
+  static const String roomISAdded = "Room is added successfully!";
 }

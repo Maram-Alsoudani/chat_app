@@ -22,7 +22,7 @@ class RegisterViewModel extends ChangeNotifier {
   void createUser(
       {required String emailAddress, required String password}) async {
     if (formKey.currentState?.validate() == true) {
-      controller.showLoading(AppStrings.loading);
+      controller.showLoading();
       try {
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -37,23 +37,22 @@ class RegisterViewModel extends ChangeNotifier {
         var savedUserData = await addUserUseCase.call(user);
         //hide loading - show message
         controller.hideLoading();
-        controller.showMessage(
-            AppStrings.registerSuccessful, AppStrings.success,
-            posActionName: AppStrings.Continue);
+        controller.showMessage(AppStrings.success);
       } on FirebaseAuthException catch (e) {
         if (e.code == AppStrings.weakPassword) {
           controller.hideLoading();
-          controller.showMessage(AppStrings.weakPassMsg, AppStrings.failed,
-              posActionName: AppStrings.close);
+          controller.showMessage(AppStrings.failed,
+              error: AppStrings.weakPassMsg);
         } else if (e.code == AppStrings.existingEmail) {
           controller.hideLoading();
-          controller.showMessage(AppStrings.existingEmailMsg, AppStrings.failed,
-              posActionName: AppStrings.close);
+          controller.showMessage(
+            AppStrings.failed,
+            error: AppStrings.existingEmailMsg,
+          );
         }
       } catch (e) {
         controller.hideLoading();
-        controller.showMessage(e.toString(), AppStrings.failed,
-            posActionName: AppStrings.close);
+        controller.showMessage(AppStrings.failed, error: e.toString());
       }
     }
   }

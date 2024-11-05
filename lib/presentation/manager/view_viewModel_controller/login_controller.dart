@@ -1,10 +1,7 @@
 abstract class LoginController {
   void hideLoading();
 
-  void showLoading(
-    String message,
-  );
+  void showLoading();
 
-  void showMessage(String message, String title,
-      {String posActionName, Function posAction});
+  void showMessage(String msgTitle, {String? error = ''});
 }

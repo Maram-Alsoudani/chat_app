@@ -1,4 +1,4 @@
-abstract class RegisterController {
+abstract class AddRoomController {
   void hideLoading();
 
   void showLoading();
