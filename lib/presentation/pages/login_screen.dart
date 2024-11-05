@@ -14,17 +14,16 @@ import 'package:provider/provider.dart';
 import '../../../config/routes.dart';
 import '../../../core/reusable_components/custom_elevated_button.dart';
 import '../manager/providers/login_view_model.dart';
-import '../manager/view_viewModel_controller/register_controller.dart';
+import '../manager/view_viewModel_controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<LoginScreen>
-    implements RegisterController {
+class _LoginScreenState extends State<LoginScreen> implements LoginController {
   LoginViewModel viewModel = getIt<LoginViewModel>();
 
   @override
@@ -125,20 +124,28 @@ class _RegisterScreenState extends State<LoginScreen>
   }
 
   @override
-  void showLoading(String message) {
-    DialogUtils.showLoading(context: context, message: message);
+  void showLoading() {
+    DialogUtils.showLoading(context: context, message: AppStrings.loading);
   }
 
   @override
-  void showMessage(String message, String title,
-      {String? posActionName, Function? posAction}) {
-    DialogUtils.showMessage(
-      context: context,
-      message: message,
-      title: title,
-      posActionName: posActionName,
-        posAction: () {
-          Navigator.pushNamed(context, Routes.homeScreenRoute);
-        });
+  void showMessage(String msgTitle, {String? error = ''}) {
+    if (msgTitle == AppStrings.success) {
+      DialogUtils.showMessage(
+          context: context,
+          message: AppStrings.loginSuccessful,
+          title: AppStrings.success,
+          posActionName: AppStrings.Continue,
+          posAction: () {
+            Navigator.pushReplacementNamed(context, Routes.homeScreenRoute);
+          });
+    } else if (msgTitle == AppStrings.failed && error != '') {
+      DialogUtils.showMessage(
+        context: context,
+        message: error!,
+        title: AppStrings.failed,
+        posActionName: AppStrings.close,
+      );
+    }
   }
 }

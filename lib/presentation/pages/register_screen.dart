@@ -128,20 +128,27 @@ class _RegisterScreenState extends State<RegisterScreen>
   }
 
   @override
-  void showLoading(String message) {
-    DialogUtils.showLoading(context: context, message: message);
+  void showLoading() {
+    DialogUtils.showLoading(context: context, message: AppStrings.loading);
   }
 
   @override
-  void showMessage(String message, String title,
-      {String? posActionName, Function? posAction}) {
-    DialogUtils.showMessage(
-        context: context,
-        message: message,
-        title: title,
-        posActionName: posActionName,
-        posAction: posActionName == AppStrings.Continue
-            ? () => Navigator.pushNamed(context, Routes.loginScreenRoute)
-            : () => Navigator.pop(context));
+  void showMessage(String msgTitle, {String? error = ''}) {
+    if (msgTitle == AppStrings.success) {
+      DialogUtils.showMessage(
+          context: context,
+          message: AppStrings.registerSuccessful,
+          title: AppStrings.success,
+          posActionName: AppStrings.Continue,
+          posAction: () {
+            Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
+          });
+    } else if (msgTitle == AppStrings.failed && error != '') {
+      DialogUtils.showMessage(
+          context: context,
+          message: error!,
+          title: AppStrings.success,
+          posActionName: AppStrings.close);
+    }
   }
 }
