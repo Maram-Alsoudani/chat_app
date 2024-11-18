@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 @injectable
 class HomeScreenViewModel extends ChangeNotifier {
   //holding data
-  List<RoomEntity> roomsList = [];
   GetAllRoomsUseCase getAllRoomsUseCase;
 
   HomeScreenViewModel({required this.getAllRoomsUseCase});

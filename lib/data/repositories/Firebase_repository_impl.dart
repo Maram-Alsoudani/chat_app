@@ -1,5 +1,7 @@
 import 'package:chat_app/data/data_sources/firebase_remote_data_source.dart';
+import 'package:chat_app/data/models/message_model.dart';
 import 'package:chat_app/data/models/room_model.dart';
+import 'package:chat_app/domain/entities/message_entity.dart';
 import 'package:chat_app/domain/entities/room_entity.dart';
 import 'package:chat_app/domain/entities/user_entity.dart';
 import 'package:chat_app/domain/repositories/firebase_repository.dart';
@@ -41,5 +43,23 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   @override
   Stream<List<RoomEntity?>> getAllRoomsFromFireStore() {
     return firebaseRemoteDataSource.getAllRoomsFromFireStore();
+  }
+
+  @override
+  Future<void> insertMessage(MessageEntity messageEntity) {
+    final messageModel = MessageModel(
+        messageId: messageEntity.messageId,
+        roomId: messageEntity.roomId,
+        senderId: messageEntity.senderId,
+        senderName: messageEntity.senderName,
+        content: messageEntity.content,
+        dateTime: messageEntity.dateTime);
+
+    return firebaseRemoteDataSource.insertMessage(messageModel);
+  }
+
+  @override
+  Stream<List<MessageEntity?>> getMessages(String roomId) {
+    return firebaseRemoteDataSource.getMessages(roomId);
   }
 }

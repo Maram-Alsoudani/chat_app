@@ -28,7 +28,7 @@ class LoginViewModel extends ChangeNotifier {
         var userObj = await getUserUseCase.call(credential.user?.uid ?? "");
         if (userObj != null) {
           controller.hideLoading();
-          controller.showMessage(AppStrings.success);
+          controller.showMessage(AppStrings.success, user: userObj);
         } else {
           controller.hideLoading();
           controller.showMessage(AppStrings.failed,

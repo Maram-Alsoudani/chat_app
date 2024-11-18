@@ -7,6 +7,8 @@ import 'package:chat_app/core/utils/font_constants.dart';
 import 'package:chat_app/core/utils/strings.dart';
 import 'package:chat_app/core/utils/text_style_manager.dart';
 import 'package:chat_app/di/di.dart';
+import 'package:chat_app/domain/entities/user_entity.dart';
+import 'package:chat_app/presentation/manager/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -129,8 +131,11 @@ class _LoginScreenState extends State<LoginScreen> implements LoginController {
   }
 
   @override
-  void showMessage(String msgTitle, {String? error = ''}) {
+  void showMessage(String msgTitle, {UserEntity? user, String? error = ''}) {
     if (msgTitle == AppStrings.success) {
+      //saving logged in user will be done during navigating to home
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.user = user;
       DialogUtils.showMessage(
           context: context,
           message: AppStrings.loginSuccessful,

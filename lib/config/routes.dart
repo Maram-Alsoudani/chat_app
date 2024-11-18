@@ -1,3 +1,4 @@
+import 'package:chat_app/domain/entities/room_entity.dart';
 import 'package:chat_app/presentation/pages/create_new_room.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +26,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.createNewRouteScreen:
         return MaterialPageRoute(builder: (_) => CreateNewRoomScreen());
-      case Routes.createNewRouteScreen:
-        return MaterialPageRoute(builder: (_) => ChatScreen());
+      case Routes.chatScreen:
+        final room =
+            settings.arguments as RoomEntity; // Cast the argument to RoomEntity
+        return MaterialPageRoute(builder: (_) => ChatScreen(room: room));
+
       default:
         return unDefinedRouteName();
     }

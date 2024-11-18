@@ -46,6 +46,17 @@ class _CreateNewRoomScreenState extends State<CreateNewRoomScreen>
       create: (context) => viewModel,
       child: BaseScreenLayout(
           scaffold: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white, // Change the color to whatever you prefer
+          ),
+        ),
         body: Center(
           child: Material(
             elevation: 5.0,

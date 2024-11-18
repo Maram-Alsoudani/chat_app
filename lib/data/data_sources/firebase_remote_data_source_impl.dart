@@ -1,4 +1,5 @@
 import 'package:chat_app/data/data_sources/firebase_remote_data_source.dart';
+import 'package:chat_app/data/models/message_model.dart';
 import 'package:chat_app/data/models/room_model.dart';
 import 'package:chat_app/data/models/user_model.dart';
 import 'package:chat_app/domain/entities/user_entity.dart';
@@ -25,6 +26,16 @@ class FirebaseRemoteDataSourceImpl extends FirebaseRemoteDataSource {
             fromFirestore: (snapshot, options) =>
                 RoomModel.fromJson(snapshot.data()!),
             toFirestore: (roomModel, options) => roomModel.toJson());
+  }
+
+  CollectionReference<MessageModel> getMessagesCollection(String roomId) {
+    return getRoomsCollection()
+        .doc(roomId)
+        .collection('messages')
+        .withConverter(
+            fromFirestore: (snapshot, options) =>
+                MessageModel.fromJson(snapshot.data()!),
+            toFirestore: (messageModel, options) => messageModel.toJson());
   }
 
   @override
@@ -58,6 +69,33 @@ class FirebaseRemoteDataSourceImpl extends FirebaseRemoteDataSource {
             title: data.title,
             description: data.description,
             categoryId: data.categoryId);
+      }).toList();
+    });
+  }
+
+  @override
+  Future<void> insertMessage(MessageModel messageModel) {
+    var messagesCollection = getMessagesCollection(messageModel.roomId);
+    var docRef = messagesCollection.doc();
+    messageModel.roomId = docRef.id;
+    return docRef.set(messageModel);
+  }
+
+  @override
+  Stream<List<MessageModel?>> getMessages(String roomId) {
+    return getMessagesCollection(roomId)
+        .orderBy("dateTime")
+        .snapshots()
+        .map((snapShot) {
+      return snapShot.docs.map((doc) {
+        final data = doc.data();
+        return MessageModel(
+            messageId: data.messageId,
+            roomId: data.roomId,
+            senderId: data.senderId,
+            senderName: data.senderName,
+            content: data.content,
+            dateTime: data.dateTime);
       }).toList();
     });
   }

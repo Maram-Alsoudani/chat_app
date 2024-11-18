@@ -52,68 +52,70 @@ class _RegisterScreenState extends State<RegisterScreen>
                   color: ColorManager.white),
             ),
           ),
-          body: Form(
-            key: viewModel.formKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  CustomTextFormField(
-                    label: AppStrings.fullName,
-                    validator: (val) => AppValidators.validateFullName(val),
-                    controller: viewModel.fullNameController,
-                  ),
-                  CustomTextFormField(
-                    label: AppStrings.email,
-                    validator: (val) => AppValidators.validateEmail(val),
-                    controller: viewModel.emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  CustomTextFormField(
-                    label: AppStrings.password,
-                    validator: (val) => AppValidators.validatePassword(val),
-                    controller: viewModel.passController,
-                  ),
-                  CustomTextFormField(
-                    label: AppStrings.confirmPassword,
-                    validator: (val) => AppValidators.validateConfirmPassword(
-                        val, viewModel.passController),
-                    controller: viewModel.confirmPassController,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  CustomElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all(ColorManager.primaryColor),
-                        foregroundColor:
-                            WidgetStateProperty.all(ColorManager.white),
-                        shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)))),
-                    onClicked: () {
-                      viewModel.createUser(
-                          emailAddress: viewModel.emailController.text,
-                          password: viewModel.passController.text);
-                    },
-                    child: Text(
-                        AppStrings.registerButton), // Add a register button
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.loginScreenRoute);
+          body: SingleChildScrollView(
+            child: Form(
+              key: viewModel.formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CustomTextFormField(
+                      label: AppStrings.fullName,
+                      validator: (val) => AppValidators.validateFullName(val),
+                      controller: viewModel.fullNameController,
+                    ),
+                    CustomTextFormField(
+                      label: AppStrings.email,
+                      validator: (val) => AppValidators.validateEmail(val),
+                      controller: viewModel.emailController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    CustomTextFormField(
+                      label: AppStrings.password,
+                      validator: (val) => AppValidators.validatePassword(val),
+                      controller: viewModel.passController,
+                    ),
+                    CustomTextFormField(
+                      label: AppStrings.confirmPassword,
+                      validator: (val) => AppValidators.validateConfirmPassword(
+                          val, viewModel.passController),
+                      controller: viewModel.confirmPassController,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                              ColorManager.primaryColor),
+                          foregroundColor:
+                              WidgetStateProperty.all(ColorManager.white),
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)))),
+                      onClicked: () {
+                        viewModel.createUser(
+                            emailAddress: viewModel.emailController.text,
+                            password: viewModel.passController.text);
                       },
                       child: Text(
-                        AppStrings.alreadyHaveAnAcc,
-                        style: getTextStyle(
-                            fontSize: FontSize.s12,
-                            fontWeight: FontWeightManager.regular,
-                            color: ColorManager.primaryColor,
-                            fontFamily: FontConstants.poppins),
-                      ))
-                ],
+                          AppStrings.registerButton), // Add a register button
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.loginScreenRoute);
+                        },
+                        child: Text(
+                          AppStrings.alreadyHaveAnAcc,
+                          style: getTextStyle(
+                              fontSize: FontSize.s12,
+                              fontWeight: FontWeightManager.regular,
+                              color: ColorManager.primaryColor,
+                              fontFamily: FontConstants.poppins),
+                        ))
+                  ],
+                ),
               ),
             ),
           ),

@@ -18,12 +18,17 @@ import '../domain/repositories/firebase_repository.dart' as _i974;
 import '../domain/use_cases/add_room_use_case.dart' as _i879;
 import '../domain/use_cases/add_user_use_case.dart' as _i62;
 import '../domain/use_cases/get_all_rooms_use_case.dart' as _i536;
+import '../domain/use_cases/get_messages_use_case.dart' as _i168;
 import '../domain/use_cases/get_user_use_case.dart' as _i997;
+import '../domain/use_cases/insert_message_use_case.dart' as _i405;
+import '../presentation/manager/providers/chat_screen_view_model.dart'
+    as _i1013;
 import '../presentation/manager/providers/create_new_room_view_model.dart'
     as _i800;
 import '../presentation/manager/providers/home_screen_view_model.dart' as _i940;
 import '../presentation/manager/providers/login_view_model.dart' as _i632;
 import '../presentation/manager/providers/register_view_model.dart' as _i933;
+import '../presentation/manager/providers/user_provider.dart' as _i492;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -48,6 +53,14 @@ extension GetItInjectableX on _i174.GetIt {
         firebaseRepository: gh<_i974.FirebaseRepository>()));
     gh.factory<_i536.GetAllRoomsUseCase>(() => _i536.GetAllRoomsUseCase(
         firebaseRepository: gh<_i974.FirebaseRepository>()));
+    gh.factory<_i405.InsertMessageUseCase>(() => _i405.InsertMessageUseCase(
+        firebaseRepository: gh<_i974.FirebaseRepository>()));
+    gh.factory<_i168.GetMessagesUseCase>(() => _i168.GetMessagesUseCase(
+        firebaseRepository: gh<_i974.FirebaseRepository>()));
+    gh.factory<_i1013.ChatScreenViewModel>(() => _i1013.ChatScreenViewModel(
+          insertMessageUseCase: gh<_i405.InsertMessageUseCase>(),
+          getMessagesUseCase: gh<_i168.GetMessagesUseCase>(),
+        ));
     gh.factory<_i933.RegisterViewModel>(() =>
         _i933.RegisterViewModel(addUserUseCase: gh<_i62.AddUserUseCase>()));
     gh.factory<_i800.CreateNewRoomViewModel>(() => _i800.CreateNewRoomViewModel(
@@ -56,6 +69,8 @@ extension GetItInjectableX on _i174.GetIt {
         getAllRoomsUseCase: gh<_i536.GetAllRoomsUseCase>()));
     gh.factory<_i632.LoginViewModel>(
         () => _i632.LoginViewModel(getUserUseCase: gh<_i997.GetUserUseCase>()));
+    gh.factory<_i492.UserProvider>(
+        () => _i492.UserProvider(getUserUseCase: gh<_i997.GetUserUseCase>()));
     return this;
   }
 }

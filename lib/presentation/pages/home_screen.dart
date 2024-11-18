@@ -1,7 +1,9 @@
 import 'package:chat_app/core/reusable_components/base_screen_layout.dart';
+import 'package:chat_app/core/reusable_components/dialog_utils.dart';
 import 'package:chat_app/core/utils/strings.dart';
 import 'package:chat_app/core/utils/text_style_manager.dart';
 import 'package:chat_app/presentation/manager/providers/home_screen_view_model.dart';
+import 'package:chat_app/presentation/manager/providers/user_provider.dart';
 import 'package:chat_app/presentation/widgets/room_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,15 +20,26 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> {
   HomeScreenViewModel viewModel = getIt<HomeScreenViewModel>();
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<UserProvider>(context);
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: BaseScreenLayout(
           scaffold: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white, // Change the color to whatever you prefer
+          ),
           centerTitle: true,
           title: Text(
             AppStrings.home,
@@ -36,6 +49,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 fontFamily: FontConstants.poppins,
                 color: ColorManager.white),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  provider.logout();
+                  DialogUtils.showMessage(
+                      context: context,
+                      message: "Are you sure you want to log out?",
+                      title: "Confirm Logout",
+                      posActionName: "yes",
+                      negActionName: "cancel",
+                      posAction: () {
+                        Navigator.pushReplacementNamed(
+                            context, Routes.loginScreenRoute);
+                      });
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: ColorManager.white,
+                ))
+          ],
         ),
         body: StreamBuilder(
             stream: viewModel.getRooms(),
@@ -56,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       return InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, Routes.chatScreen,
-                                arguments: roomsList[index]?.title);
+                                arguments: roomsList[index]);
                           },
                           child: RoomWidget(room: roomsList[index]));
                     });
